@@ -265,3 +265,128 @@ agent_executor = AgentExecutor(
 agent_executor.invoke({"input": "我叫小明"})
 agent_executor.invoke({"input": "我叫什么名字？"})  # 能记住
 
+# 学习日志 - Day7 (2026-03-24)
+
+## 完成内容
+- [x] 理解对话记忆在 Agent 中的作用
+- [x] 使用 `ConversationBufferMemory` 保存完整历史
+- [x] 自定义包含 `{chat_history}` 的提示词模板
+- [x] 将记忆集成到 `AgentExecutor`，测试多轮对话
+- [x] 探索其他记忆类型：`ConversationBufferWindowMemory`、`ConversationSummaryMemory`
+- [x] 完成小练习：
+    - 修改记忆窗口大小为 1，验证只能记住最近一轮
+    - 将提示词模板改为中文，测试记忆效果
+    - 模拟多轮对话（5轮），检查 Agent 能否回忆早期信息
+
+## 遇到的问题
+1. **中文模板中 `{chat_history}` 占位符的格式问题**  
+   第一次使用中文模板时，直接复制了英文格式，但 `ChatPromptTemplate` 要求 `{chat_history}` 必须正确传递。由于忘记在 `memory_key` 中保持一致，导致历史未注入。  
+2. **`ConversationBufferWindowMemory` 设置 `k=1` 后，第二轮对话无法回忆第一轮的内容**  
+   符合预期，但验证了窗口机制有效。  
+3. **`ConversationSummaryMemory` 在长对话中消耗 token 较多，且摘要有时会丢失细节**  
+   需要权衡成本和精度，在简单场景下 `BufferMemory` 更直接。
+
+## 解决过程
+- 检查模板中变量名与 `memory_key` 是否完全一致（均为 `chat_history`）。  
+- 确认 `return_messages=True` 以保证与 `ChatPromptTemplate` 兼容。  
+- 使用 `print(memory.chat_memory.messages)` 查看历史内容，验证记忆是否存储。  
+- 对于 `ConversationSummaryMemory`，尝试调整 `summary_prompt` 以改善摘要质量，但保留了默认。
+
+## 今日收获
+- 掌握了 LangChain 记忆模块的核心概念和集成方法。  
+- 理解了不同记忆类型的适用场景：
+  - `ConversationBufferMemory`：简单直接，适合短对话。
+  - `ConversationBufferWindowMemory`：节省 token，适合实时交互。
+  - `ConversationSummaryMemory`：适合长对话，但会丢失部分细节且消耗额外 token。  
+- 体验了带记忆的 Agent 在多轮对话中如何利用历史信息，显著提升交互体验。  
+- 中文提示词同样有效，但需注意变量名和模板结构的准确性。
+
+## 关键代码片段
+```python
+# 带记忆的提示词模板
+react_prompt = ChatPromptTemplate.from_template("""
+Answer the following questions as best you can. You have access to the following tools:
+
+{tools}
+
+Previous conversation:
+{chat_history}
+
+Use the following format:
+...
+Begin!
+
+Question: {input}
+Thought: {agent_scratchpad}
+""")
+
+# 创建记忆
+from langchain.memory import ConversationBufferMemory
+memory = ConversationBufferMemory(
+    memory_key="chat_history",
+    return_messages=True
+)
+
+# 创建 Agent 和 Executor
+agent = create_react_agent(llm, tools, react_prompt)
+agent_executor = AgentExecutor(
+    agent=agent,
+    tools=tools,
+    memory=memory,
+    verbose=True,
+    max_iterations=5,
+    handle_parsing_errors=True
+)
+
+# 测试多轮
+agent_executor.invoke({"input": "我叫小明"})
+agent_executor.invoke({"input": "我叫什么名字？"})  # 能记住
+
+
+
+
+# 学习日志 - Day8 (2026-03-24)
+
+## 完成内容
+- [x] 定义天气 API 工具，成功调用 OpenWeatherMap 获取实时天气
+- [x] 将已有 RAG 向量库封装为 LangChain 工具 `rag_search_tool`
+- [x] 创建包含 4 个工具（加法、乘法、天气、RAG）的 Agent
+- [x] 为 Agent 集成 `ConversationBufferMemory`，实现多轮对话记忆
+- [x] 测试混合任务：自我介绍、知识库问答、实时天气、数学计算
+- [x] 将工具定义封装到独立模块 `tools.py`，并通过导入方式使用
+- [x] 将 RAG 检索方法从 `similarity_search` 改为 MMR（最大边际相关性），提高结果多样性
+- [x] 解决向量库加载、模块导入、MMR 调用等一系列环境问题
+
+## 遇到的问题
+1. **向量库加载失败**：使用 `Chroma(persist_directory=..., embedding_function=...)` 时报 `Could not import chromadb`，原因是缺少 `chromadb` 包。  
+2. **工具导入错误**：在 notebook 中尝试 `from day6_code import ...` 失败，因为未创建对应 `.py` 文件。  
+3. **`tools.py` 文件内容错误**：误将 Jupyter notebook 的 JSON 元数据保存到 `tools.py`，导致 `NameError: name 'null' is not defined`。  
+4. **MMR 方法未生效**：原始 `_search_library` 使用 `similarity_search`，需要替换为 `max_marginal_relevance_search`，并注意缩进。
+
+## 解决过程
+- **向量库加载**：在 `env_name` 环境中手动安装 `chromadb`，并改用旧版参数名 `embedding_function`，成功加载。  
+- **工具模块化**：新建 `tools.py`，将所有工具定义集中，通过 `from tools import ...` 导入。  
+- **修复 `tools.py`**：删除错误的 JSON 内容，重新写入纯 Python 代码，并使用绝对路径定位 `chroma_db`。  
+- **MMR 集成**：修改 `_search_library` 函数，使用 `vectorstore.max_marginal_relevance_search(query, k=k, fetch_k=k*3)`，并添加 `lambda_mult` 调节多样性。
+
+## 今日收获
+- 掌握了将真实 API 和本地知识库封装为 LangChain 工具的方法，理解了 `@tool` 装饰器的自动文档生成机制。  
+- 学会了在独立模块中管理工具，实现代码复用和环境解耦。  
+- 深入理解了 MMR 检索与相似性检索的区别，并成功应用于 RAG 工具，提升回答的全面性。  
+- 巩固了 Agent 记忆集成，实现了多轮对话中混合工具调用的复杂场景。
+
+## 关键代码片段
+```python
+# tools.py 中的 MMR 检索函数
+def _search_library(query: str, k: int = 3) -> str:
+    if vectorstore is None:
+        return "向量库未加载，无法检索。"
+    docs = vectorstore.max_marginal_relevance_search(
+        query,
+        k=k,
+        fetch_k=k * 3,
+        lambda_mult=0.7   # 偏向相关性
+    )
+    if not docs:
+        return "未找到相关信息。"
+    return "\n\n".join([doc.page_content for doc in docs])
