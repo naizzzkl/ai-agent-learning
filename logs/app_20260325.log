@@ -1,0 +1,76 @@
+2026-03-25 23:42:55,649 - __main__ - INFO - 用户提问：帮我查询杭州市的天气
+2026-03-25 23:42:57,965 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:43:00,173 - tools - INFO - weather_tool 被调用，城市：杭州
+2026-03-25 23:43:00,904 - tools - INFO - weather_tool 返回：查询失败：city not found...
+2026-03-25 23:43:01,995 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:43:04,243 - tools - INFO - weather_tool 被调用，城市：Hangzhou
+2026-03-25 23:43:05,998 - tools - INFO - weather_tool 返回：Hangzhou 天气：多云，温度 13.05℃，湿度 69%...
+2026-03-25 23:43:07,507 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:43:09,130 - __main__ - INFO - Agent 回答：杭州市当前天气为多云，温度13.05℃，湿度69%。...
+2026-03-25 23:43:12,918 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:43:16,432 - tools - INFO - weather_tool 被调用，城市：杭州
+2026-03-25 23:43:17,405 - tools - INFO - weather_tool 返回：查询失败：city not found...
+2026-03-25 23:43:19,117 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:43:22,323 - tools - INFO - weather_tool 被调用，城市：杭州市
+2026-03-25 23:43:23,071 - tools - INFO - weather_tool 返回：杭州市 天气：多云，温度 13.05℃，湿度 69%...
+2026-03-25 23:43:23,901 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:43:25,856 - __main__ - INFO - 用户提问：帮我查询杭州市的天气
+2026-03-25 23:43:28,309 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:43:29,451 - tools - INFO - weather_tool 被调用，城市：杭州市
+2026-03-25 23:43:30,155 - tools - INFO - weather_tool 返回：杭州市 天气：多云，温度 13.05℃，湿度 69%...
+2026-03-25 23:43:32,224 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:43:33,351 - __main__ - INFO - Agent 回答：杭州市当前天气为多云，温度13.05℃，湿度69%。...
+2026-03-25 23:45:56,895 - __main__ - INFO - 用户提问：方闻馆开放时间？今天北京天气？15+27？
+2026-03-25 23:45:59,484 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:46:03,057 - tools - INFO - rag_search_tool 被调用，查询：方闻馆开放时间
+2026-03-25 23:46:03,355 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/embeddings "HTTP/1.1 200 OK"
+2026-03-25 23:46:03,393 - tools - INFO - rag_search_tool 返回结果长度：1371 字符
+2026-03-25 23:46:04,251 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:46:06,092 - tools - INFO - weather_tool 被调用，城市：北京
+2026-03-25 23:46:06,825 - tools - INFO - weather_tool 返回：查询失败：city not found...
+2026-03-25 23:46:08,363 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:46:11,835 - tools - INFO - weather_tool 被调用，城市：北京市
+2026-03-25 23:46:12,580 - tools - INFO - weather_tool 返回：北京市 天气：晴，温度 16.67℃，湿度 27%...
+2026-03-25 23:46:13,554 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:46:17,030 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:46:26,642 - __main__ - INFO - Agent 回答：1. 方闻馆开放时间：
+   - 咨询台、东阅览室、西阅览室：周一至周日 8:30-22:30
+   - 珍本阅览室：周一至周五 08:30-12:00；13:30-17:30（周六日不开放）
+   - 三层密集书库：周一至周五 08:30-12:00；13:30-17:30（周六日不开放）
+
+2. 北京市当前天气：晴，温度16.67℃，湿度27%
+
+3. 15+27的计算结果是42...
+2026-03-25 23:46:32,562 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:46:36,637 - tools - INFO - rag_search_tool 被调用，查询：方闻馆开放时间
+2026-03-25 23:46:36,825 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/embeddings "HTTP/1.1 200 OK"
+2026-03-25 23:46:36,829 - tools - INFO - rag_search_tool 返回结果长度：1371 字符
+2026-03-25 23:46:41,270 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:46:44,317 - tools - INFO - weather_tool 被调用，城市：北京
+2026-03-25 23:46:45,253 - tools - INFO - weather_tool 返回：查询失败：city not found...
+2026-03-25 23:46:53,523 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:46:56,107 - tools - INFO - weather_tool 被调用，城市：北京市
+2026-03-25 23:46:56,801 - tools - INFO - weather_tool 返回：北京市 天气：晴，温度 16.67℃，湿度 27%...
+2026-03-25 23:46:58,723 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:47:02,137 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:47:10,010 - __main__ - INFO - 用户提问：方闻馆开放时间？今天北京天气？15+27？
+2026-03-25 23:47:10,925 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:47:16,815 - tools - INFO - rag_search_tool 被调用，查询：方闻馆开放时间
+2026-03-25 23:47:16,968 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/embeddings "HTTP/1.1 200 OK"
+2026-03-25 23:47:16,970 - tools - INFO - rag_search_tool 返回结果长度：1371 字符
+2026-03-25 23:47:18,560 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:47:21,419 - tools - INFO - weather_tool 被调用，城市：北京
+2026-03-25 23:47:22,130 - tools - INFO - weather_tool 返回：查询失败：city not found...
+2026-03-25 23:47:24,133 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:47:26,563 - tools - INFO - weather_tool 被调用，城市：北京市
+2026-03-25 23:47:27,285 - tools - INFO - weather_tool 返回：北京市 天气：晴，温度 16.67℃，湿度 27%...
+2026-03-25 23:47:28,550 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:47:31,920 - httpx - INFO - HTTP Request: POST https://api.siliconflow.cn/v1/chat/completions "HTTP/1.1 200 OK"
+2026-03-25 23:47:40,867 - __main__ - INFO - Agent 回答：1. 方闻馆开放时间：
+   - 咨询台：周一至周日 8:30-22:30
+   - 东阅览室：周一至周日 8:30-22:30
+   - 西阅览室：周一至周日 8:30-22:30
+   - 珍本阅览室：周一至周五 08:30-12:00；13:30-17:30（周六日不开放）
+   - 三层密集书库：周一至周五 08:30-12:00；13:30-17:30（周六日不开放）
+
+2. 北京市当前...
