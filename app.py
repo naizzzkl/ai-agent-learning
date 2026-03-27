@@ -11,7 +11,7 @@ load_dotenv()
 # ---------- 1. 配置模型（直接使用 ChatOpenAI，避免 provider 参数） ----------
 llm = ChatOpenAI(
     model="deepseek-ai/DeepSeek-V3.2",
-    openai_api_key=os.getenv("siliconFlow_API_KEY"),
+    openai_api_key=os.getenv("SILICONFLOW_API_KEY"),
     openai_api_base="https://api.siliconflow.cn/v1",
     temperature=0.3,
     max_tokens=8192,

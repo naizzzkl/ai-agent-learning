@@ -11,7 +11,7 @@ load_dotenv()
 def get_embeddings():
     return OpenAIEmbeddings(
         model="BAAI/bge-large-zh-v1.5",
-        openai_api_key=os.getenv("siliconFlow_API_KEY"),
+        openai_api_key=os.getenv("SILICONFLOW_API_KEY"),
         openai_api_base="https://api.siliconflow.cn/v1"
     )
 
